@@ -36,17 +36,17 @@ const { Title, Paragraph, Text } = Typography;
 const toneMeta = {
   critical: {
     tagColor: "red",
-    label: "Canh bao cao",
+    label: "High alert",
     accent: "#b6452c",
   },
   watch: {
     tagColor: "orange",
-    label: "Vuot nguong model",
+    label: "Above model threshold",
     accent: "#d2842f",
   },
   stable: {
     tagColor: "green",
-    label: "Duoi nguong canh bao",
+    label: "Below alert threshold",
     accent: "#23725a",
   },
 };
@@ -142,7 +142,7 @@ export default function PredictionStudio() {
     } catch (error) {
       setResult(null);
       setApiError({
-        message: error.message ?? "Khong the goi API du doan.",
+        message: error.message ?? "Unable to call the prediction API.",
         details: error.details ?? null,
       });
     } finally {
@@ -180,30 +180,24 @@ export default function PredictionStudio() {
               level={1}
               className="!mb-4 !mt-6 !max-w-2xl !text-4xl !leading-[1.02] !font-semibold !tracking-tight !text-[#241c16] md:!text-6xl"
             >
-              Form danh gia nguy co tim mach cho model da train.
+              Cardiovascular risk assessment for the trained model.
             </Title>
 
 
             <div className="grid gap-4 md:grid-cols-3">
               <Card className="glass-card !rounded-[28px] !border-0">
-                <Text className="eyebrow">Input toi gian</Text>
+                <Text className="eyebrow">Lean input</Text>
                 <Paragraph className="!mb-0 !mt-3 !text-sm !leading-7 !text-[#6a5546]">
-                  Nguoi dung chi can nhap 11 truong co ban. BMI, pulse pressure
-                  va mean arterial pressure duoc tinh tu dong.
+                  Users only need to enter 11 core fields. BMI, pulse
+                  pressure, and mean arterial pressure are calculated
+                  automatically.
                 </Paragraph>
               </Card>
               <Card className="glass-card !rounded-[28px] !border-0">
-                <Text className="eyebrow">Output ro rang</Text>
+                <Text className="eyebrow">Clear output</Text>
                 <Paragraph className="!mb-0 !mt-3 !text-sm !leading-7 !text-[#6a5546]">
-                  Ket qua hien thi thanh muc, nhan nguong, JSON response va
-                  payload cuoi cung ma model thuc su nhan.
-                </Paragraph>
-              </Card>
-              <Card className="glass-card !rounded-[28px] !border-0">
-                <Text className="eyebrow">Chay local ngay</Text>
-                <Paragraph className="!mb-0 !mt-3 !text-sm !leading-7 !text-[#6a5546]">
-                  Ban co the giu fallback local khi dev, hoac tro toi prediction
-                  server rieng de deploy frontend va backend tach nhau.
+                  The result shows the risk bar, threshold badge, JSON
+                  response, and the final payload the model actually receives.
                 </Paragraph>
               </Card>
             </div>
@@ -217,7 +211,7 @@ export default function PredictionStudio() {
                   level={3}
                   className="!mb-0 !mt-2 !text-2xl !text-[#241c16]"
                 >
-                  Gia tri tinh tu dong truoc khi goi model
+                  Auto-derived values before the model call
                 </Title>
               </div>
               <Space wrap>
@@ -253,12 +247,12 @@ export default function PredictionStudio() {
               <div>
                 <Text className="eyebrow">Payload preview</Text>
                 <Paragraph className="!mb-0 !mt-2 !text-sm !leading-7 !text-[#735e4d]">
-                  Day la bo du lieu cuoi cung sau khi da chuan hoa va tinh them
-                  feature suy dien.
+                  This is the final payload after normalization and derived
+                  feature calculation.
                 </Paragraph>
               </div>
               <Tag color="default" className="!rounded-full !px-4 !py-1">
-                14 truong cho model
+                14 fields for the model
               </Tag>
             </div>
 
@@ -277,11 +271,11 @@ export default function PredictionStudio() {
                   level={2}
                   className="!mb-0 !mt-2 !text-3xl !text-[#241c16]"
                 >
-                  Nhap thong tin benh nhan
+                  Enter patient information
                 </Title>
               </div>
               <Text className="!text-sm !text-[#7f6854]">
-                API se tu tinh feature suy dien truoc khi chay model.
+                The API computes derived features before running the model.
               </Text>
             </div>
 
@@ -293,22 +287,22 @@ export default function PredictionStudio() {
             >
               <Row gutter={[16, 16]}>
                 <Col xs={24} md={12}>
-                  <FieldShell label="Gioi tinh">
+                  <FieldShell label="Gender">
                     <Form.Item
                       name="gender"
                       className="!mb-0"
-                      rules={[{ required: true, message: "Chon gioi tinh." }]}
+                      rules={[{ required: true, message: "Select a gender." }]}
                     >
                       <Select options={GENDER_OPTIONS} />
                     </Form.Item>
                   </FieldShell>
                 </Col>
                 <Col xs={24} md={12}>
-                  <FieldShell label="Tuoi" hint="nam">
+                  <FieldShell label="Age" hint="years">
                     <Form.Item
                       name="age_years"
                       className="!mb-0"
-                      rules={[{ required: true, message: "Nhap tuoi." }]}
+                      rules={[{ required: true, message: "Enter age." }]}
                     >
                       <InputNumber
                         min={1}
@@ -322,11 +316,11 @@ export default function PredictionStudio() {
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <FieldShell label="Chieu cao" hint="cm">
+                  <FieldShell label="Height" hint="cm">
                     <Form.Item
                       name="height"
                       className="!mb-0"
-                      rules={[{ required: true, message: "Nhap chieu cao." }]}
+                      rules={[{ required: true, message: "Enter height." }]}
                     >
                       <InputNumber
                         min={50}
@@ -338,11 +332,11 @@ export default function PredictionStudio() {
                   </FieldShell>
                 </Col>
                 <Col xs={24} md={12}>
-                  <FieldShell label="Can nang" hint="kg">
+                  <FieldShell label="Weight" hint="kg">
                     <Form.Item
                       name="weight"
                       className="!mb-0"
-                      rules={[{ required: true, message: "Nhap can nang." }]}
+                      rules={[{ required: true, message: "Enter weight." }]}
                     >
                       <InputNumber
                         min={20}
@@ -356,12 +350,15 @@ export default function PredictionStudio() {
                 </Col>
 
                 <Col xs={24} md={12}>
-                  <FieldShell label="Huyet ap tam thu" hint="ap_hi">
+                  <FieldShell label="Systolic blood pressure" hint="ap_hi">
                     <Form.Item
                       name="ap_hi"
                       className="!mb-0"
                       rules={[
-                        { required: true, message: "Nhap huyet ap tam thu." },
+                        {
+                          required: true,
+                          message: "Enter systolic blood pressure.",
+                        },
                       ]}
                     >
                       <InputNumber
@@ -374,12 +371,15 @@ export default function PredictionStudio() {
                   </FieldShell>
                 </Col>
                 <Col xs={24} md={12}>
-                  <FieldShell label="Huyet ap tam truong" hint="ap_lo">
+                  <FieldShell label="Diastolic blood pressure" hint="ap_lo">
                     <Form.Item
                       name="ap_lo"
                       className="!mb-0"
                       rules={[
-                        { required: true, message: "Nhap huyet ap tam truong." },
+                        {
+                          required: true,
+                          message: "Enter diastolic blood pressure.",
+                        },
                       ]}
                     >
                       <InputNumber
@@ -400,7 +400,7 @@ export default function PredictionStudio() {
                       rules={[
                         {
                           required: true,
-                          message: "Chon muc cholesterol.",
+                          message: "Select a cholesterol level.",
                         },
                       ]}
                     >
@@ -414,7 +414,7 @@ export default function PredictionStudio() {
                       name="gluc"
                       className="!mb-0"
                       rules={[
-                        { required: true, message: "Chon muc glucose." },
+                        { required: true, message: "Select a glucose level." },
                       ]}
                     >
                       <Select options={LEVEL_3_OPTIONS} />
@@ -423,7 +423,7 @@ export default function PredictionStudio() {
                 </Col>
 
                 <Col xs={24} md={8}>
-                  <FieldShell label="Hut thuoc">
+                  <FieldShell label="Smoking">
                     <Form.Item
                       name="smoke"
                       className="!mb-0"
@@ -434,7 +434,7 @@ export default function PredictionStudio() {
                   </FieldShell>
                 </Col>
                 <Col xs={24} md={8}>
-                  <FieldShell label="Uong ruou">
+                  <FieldShell label="Alcohol">
                     <Form.Item
                       name="alco"
                       className="!mb-0"
@@ -445,7 +445,7 @@ export default function PredictionStudio() {
                   </FieldShell>
                 </Col>
                 <Col xs={24} md={8}>
-                  <FieldShell label="Van dong">
+                  <FieldShell label="Physical activity">
                     <Form.Item
                       name="active"
                       className="!mb-0"
@@ -463,12 +463,12 @@ export default function PredictionStudio() {
                   htmlType="submit"
                   loading={isSubmitting || isPending}
                 >
-                  Du doan ngay
+                  Predict now
                 </Button>
                 <Button onClick={() => applySample("baseline")}>
-                  Dien du lieu mau
+                  Fill sample data
                 </Button>
-                <Button onClick={resetForm}>Lam moi</Button>
+                <Button onClick={resetForm}>Reset</Button>
               </div>
             </Form>
           </Card>
@@ -499,7 +499,7 @@ export default function PredictionStudio() {
                   level={3}
                   className="!mb-0 !mt-2 !text-2xl !text-[#241c16]"
                 >
-                  {activeResult ? "Ket qua du doan" : "Cho mot request moi"}
+                  {activeResult ? "Prediction result" : "Waiting for a new request"}
                 </Title>
               </div>
               <Tag
@@ -517,7 +517,7 @@ export default function PredictionStudio() {
             <div className="mt-6 rounded-[28px] border border-[rgba(107,73,46,0.1)] bg-[#fff8ef] p-5">
               <div className="flex items-center justify-between gap-4">
                 <Text className="text-sm font-medium !text-[#7a5f4c]">
-                  Probability Cardio
+                  Cardio probability
                 </Text>
                 <Text className="text-sm !text-[#7a5f4c]">
                   Threshold {thresholdPercent}%

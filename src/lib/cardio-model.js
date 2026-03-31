@@ -33,13 +33,13 @@ export const CARDIO_FORM_DEFAULTS = {
 
 export const CARDIO_SAMPLE_PROFILES = {
   baseline: {
-    label: "Mau can bang",
-    description: "Bo so lieu on dinh de demo nhanh flow du doan.",
+    label: "Balanced sample",
+    description: "Stable values for a quick prediction-flow demo.",
     values: CARDIO_FORM_DEFAULTS,
   },
   elevated: {
-    label: "Mau canh bao",
-    description: "Ho so co nhieu yeu to nguy co de test trang thai canh bao.",
+    label: "Alert sample",
+    description: "A profile with multiple risk factors to test the alert state.",
     values: {
       gender: 1,
       height: 158,
@@ -57,19 +57,19 @@ export const CARDIO_SAMPLE_PROFILES = {
 };
 
 export const GENDER_OPTIONS = [
-  { label: "Nu", value: 1 },
-  { label: "Nam", value: 2 },
+  { label: "Female", value: 1 },
+  { label: "Male", value: 2 },
 ];
 
 export const LEVEL_3_OPTIONS = [
-  { label: "Binh thuong", value: 1 },
-  { label: "Vuot nguong", value: 2 },
-  { label: "Rat cao", value: 3 },
+  { label: "Normal", value: 1 },
+  { label: "Above threshold", value: 2 },
+  { label: "Very high", value: 3 },
 ];
 
 export const BINARY_OPTIONS = [
-  { label: "Khong", value: 0 },
-  { label: "Co", value: 1 },
+  { label: "No", value: 0 },
+  { label: "Yes", value: 1 },
 ];
 
 export function roundTo(value, digits = 2) {
@@ -158,49 +158,51 @@ export function buildCardioPayload(values = {}) {
 
   if (missingFields.length > 0) {
     issues.push(
-      `Thieu hoac sai dinh dang truong: ${missingFields.join(", ")}`,
+      `Missing or invalid fields: ${missingFields.join(", ")}`,
     );
   }
 
   if (payload.height !== null && payload.height <= 0) {
-    issues.push("Chieu cao phai lon hon 0 cm.");
+    issues.push("Height must be greater than 0 cm.");
   }
 
   if (payload.weight !== null && payload.weight <= 0) {
-    issues.push("Can nang phai lon hon 0 kg.");
+    issues.push("Weight must be greater than 0 kg.");
   }
 
   if (payload.age_years !== null && payload.age_years <= 0) {
-    issues.push("Tuoi phai lon hon 0.");
+    issues.push("Age must be greater than 0.");
   }
 
   if (payload.ap_hi !== null && payload.ap_lo !== null && payload.ap_hi <= payload.ap_lo) {
-    issues.push("Huyet ap tam thu phai lon hon huyet ap tam truong.");
+    issues.push(
+      "Systolic blood pressure must be greater than diastolic blood pressure.",
+    );
   }
 
   if (
     payload.gender !== null &&
     !GENDER_OPTIONS.some((option) => option.value === payload.gender)
   ) {
-    issues.push("Gioi tinh chi nhan 1 (Nu) hoac 2 (Nam).");
+    issues.push("Gender only accepts 1 (Female) or 2 (Male).");
   }
 
   if (
     payload.cholesterol !== null &&
     !LEVEL_3_OPTIONS.some((option) => option.value === payload.cholesterol)
   ) {
-    issues.push("Cholesterol chi nhan cac muc 1, 2, 3.");
+    issues.push("Cholesterol only accepts levels 1, 2, and 3.");
   }
 
   if (
     payload.gluc !== null &&
     !LEVEL_3_OPTIONS.some((option) => option.value === payload.gluc)
   ) {
-    issues.push("Glucose chi nhan cac muc 1, 2, 3.");
+    issues.push("Glucose only accepts levels 1, 2, and 3.");
   }
 
   if (issues.length > 0) {
-    const error = new Error("Payload dau vao khong hop le.");
+    const error = new Error("The input payload is invalid.");
     error.details = issues;
     throw error;
   }
@@ -222,10 +224,10 @@ export function getRiskTone(probability = 0, threshold = CARDIO_THRESHOLD) {
 
 export function describePrediction(result) {
   if (!result) {
-    return "San sang nhan du lieu de du doan nguy co tim mach.";
+    return "Ready to receive data for cardiovascular risk prediction.";
   }
 
   return result.prediction === 1
-    ? "Xac suat vuot nguong canh bao. Nen uu tien danh gia them voi nhan vien y te."
-    : "Xac suat hien tai dang nam duoi nguong canh bao cua model.";
+    ? "The predicted probability is above the alert threshold. A follow-up medical evaluation is recommended."
+    : "The current predicted probability is below the model alert threshold.";
 }

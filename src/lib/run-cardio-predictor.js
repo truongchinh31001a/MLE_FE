@@ -29,7 +29,7 @@ function runProcess(command, args, payload) {
 
       settled = true;
       child.kill();
-      reject(new Error("Tien trinh du doan vuot qua thoi gian cho phep."));
+      reject(new Error("The prediction process exceeded the allowed time limit."));
     }, 30000);
 
     child.stdout.on("data", (chunk) => {
@@ -72,7 +72,7 @@ function runProcess(command, args, payload) {
       } catch (error) {
         reject(
           new Error(
-            `Khong doc duoc JSON tra ve tu predictor. ${error.message}`,
+            `Unable to parse JSON returned by the predictor. ${error.message}`,
           ),
         );
       }
@@ -103,5 +103,5 @@ export async function runCardioPredictor(payload) {
     }
   }
 
-  throw lastError ?? new Error("Khong tim thay Python runtime de chay model.");
+  throw lastError ?? new Error("No Python runtime was found to run the model.");
 }

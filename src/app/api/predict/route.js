@@ -30,7 +30,7 @@ async function readJsonSafely(response) {
     return JSON.parse(text);
   } catch {
     return {
-      message: "Prediction server tra ve du lieu khong phai JSON hop le.",
+      message: "The prediction server returned invalid JSON.",
       error: text,
     };
   }
@@ -82,7 +82,7 @@ export async function POST(request) {
         });
       } catch (error) {
         return buildProxyError(
-          "Khong the ket noi toi prediction server rieng.",
+          "Unable to connect to the external prediction server.",
           error.message,
         );
       }
@@ -105,7 +105,7 @@ export async function POST(request) {
         message:
           status === 400
             ? error.message
-            : "Khong the xu ly du doan luc nay.",
+            : "Unable to process the prediction right now.",
         details: error.details ?? null,
         error:
           status === 500 ? error.message : undefined,

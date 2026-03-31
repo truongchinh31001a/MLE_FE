@@ -28,7 +28,7 @@ const bodyClassName = "min-h-full";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="vi" className={htmlClassName}>
+    <html lang="en" className={htmlClassName}>
       <body className={bodyClassName}>
         <AntdProvider>{children}</AntdProvider>
       </body>

@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4ecdf;
+  --foreground: #241c16;
+  --surface: rgba(255, 249, 241, 0.78);
+  --surface-strong: #fff7ec;
+  --stroke: rgba(109, 79, 57, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-space-grotesk);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100%;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  background-image:
+    radial-gradient(circle at 15% 15%, rgba(222, 157, 95, 0.24), transparent 24%),
+    radial-gradient(circle at 84% 10%, rgba(42, 116, 90, 0.14), transparent 20%),
+    radial-gradient(circle at 70% 82%, rgba(163, 72, 47, 0.14), transparent 23%),
+    linear-gradient(180deg, #fbf7f1 0%, #f3e9db 48%, #efe1cf 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.risk-page {
+  position: relative;
+  isolation: isolate;
+}
+
+.risk-page::before {
+  content: "";
+  position: fixed;
+  inset: auto -10% -10% auto;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle, rgba(34, 114, 90, 0.18), transparent 58%);
+  filter: blur(18px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-card {
+  background: linear-gradient(180deg, rgba(255, 250, 243, 0.82), rgba(255, 246, 236, 0.72)) !important;
+  border: 1px solid var(--stroke) !important;
+  box-shadow:
+    0 20px 70px rgba(106, 78, 53, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(18px);
+}
+
+.soft-card {
+  background: rgba(255, 251, 245, 0.78) !important;
+  border: 1px solid rgba(109, 79, 57, 0.08) !important;
+  box-shadow: none !important;
+}
+
+.eyebrow {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8f6d50 !important;
+}
+
+.code-panel {
+  border-radius: 28px;
+  border: 1px solid rgba(109, 79, 57, 0.1);
+  background:
+    linear-gradient(180deg, rgba(65, 49, 38, 0.96), rgba(46, 35, 28, 0.98));
+  color: #f7e9d8;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  padding: 1rem 1.15rem;
+}
+
+.risk-page .ant-form-item {
+  margin-bottom: 0;
+}
+
+.risk-page .ant-select-selector,
+.risk-page .ant-input-number,
+.risk-page .ant-segmented {
+  border-radius: 16px !important;
+}
+
+.risk-page .ant-input-number,
+.risk-page .ant-select-selector {
+  border-color: rgba(114, 81, 56, 0.14) !important;
+  box-shadow: none !important;
+}
+
+.risk-page .ant-select-selector {
+  background: rgba(255, 255, 255, 0.82) !important;
+}
+
+.risk-page .ant-progress .ant-progress-inner {
+  background: rgba(163, 72, 47, 0.1) !important;
+}
+
+.risk-page .ant-statistic .ant-statistic-title {
+  color: #8a6f59;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.risk-page .ant-statistic .ant-statistic-content {
+  color: #241c16;
+}
+
+@media (max-width: 1024px) {
+  .risk-page .sticky {
+    position: static;
+  }
+}

@@ -174,9 +174,6 @@ export default function PredictionStudio() {
               <Tag color="gold" className="!rounded-full !px-4 !py-1">
                 Threshold {thresholdPercent}%
               </Tag>
-              <Tag color="default" className="!rounded-full !px-4 !py-1">
-                /api/predict
-              </Tag>
             </div>
 
             <Title
@@ -186,16 +183,6 @@ export default function PredictionStudio() {
               Form danh gia nguy co tim mach cho model da train.
             </Title>
 
-            <Paragraph className="!mb-6 !max-w-2xl !text-base !leading-8 !text-[#5f4d3f] md:!text-lg">
-              Giao dien nay goi toi <Text code>/api/predict</Text>. Route nay
-              co the proxy sang prediction server rieng qua bien moi truong{" "}
-              <Text code>CARDIO_SERVER_URL</Text>, hoac fallback ve Python local
-              khi ban chua tach deploy. Model dang dung la{" "}
-              <Text strong>cardio_xgboost_final.joblib</Text> de tra ve{" "}
-              <Text code>probability_cardio</Text>,{" "}
-              <Text code>prediction</Text>, va{" "}
-              <Text code>threshold_used</Text>.
-            </Paragraph>
 
             <div className="grid gap-4 md:grid-cols-3">
               <Card className="glass-card !rounded-[28px] !border-0">
